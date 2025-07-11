@@ -3,7 +3,7 @@ resource "aws_instance" "ec2-1" {
   instance_type = var.instance_type
   # key_name = "test"
   tags = {
-    Name = "Ec2-1"
+    Name = "test3"
   }
 }
 resource "aws_vpc" "name" {
