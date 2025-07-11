@@ -6,6 +6,9 @@ resource "aws_instance" "ec2-1" {
     Name = "Ec2-1"
   }
 }
+resource "aws_vpc" "name" {
+  cidr_block = "10.0.0.0/16"
+}
 
 # resource "aws_instance" "ec2-2" {
 #   ami = var.ami_id
