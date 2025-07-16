@@ -69,11 +69,18 @@ resource "aws_db_instance" "my_rds" {
   db_name                 = "myappdb2"
   username                = "admin"
   password                = random_password.rds_password.result
-
   db_subnet_group_name    = aws_db_subnet_group.sub_grp.name
   vpc_security_group_ids  = [aws_security_group.rds_sg.id]
-  skip_final_snapshot     = true
-  publicly_accessible     = false
+  parameter_group_name    = "default.mysql8.0"
+  backup_retention_period  = 7   # Retain backups for 7 days
+  backup_window            = "02:00-03:00" # Daily backup window (UTC)
+
+  # Enable performance insights
+#   performance_insights_enabled          = true
+#   performance_insights_retention_period = 7  # Retain insights for 7 days
+  maintenance_window = "sun:04:00-sun:05:00"  # Maintenance every Sunday (UTC)
+  deletion_protection = true
+  skip_final_snapshot = true
   depends_on              = [aws_db_subnet_group.sub_grp]
 }
 
