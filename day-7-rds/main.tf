@@ -22,7 +22,7 @@ resource "aws_subnet" "subnet-2" {
   }
 }
 resource "aws_db_subnet_group" "sub_grp" {
-  name = "mycustsubnet"
+  name = "mycustsubnet-11"
   subnet_ids = [aws_subnet.subnet-1.id, aws_subnet.subnet-2.id]
  # provider = aws.primary 
   tags = {
@@ -53,14 +53,15 @@ resource "aws_security_group" "rds_sg" {
 
 # Step 4: Create the RDS instance using secret values
 resource "aws_db_instance" "my_rds" {
-  identifier              = "my-rds-instance"
+  identifier              = "my-rds-instance-3"
   allocated_storage       = 20
   engine                  = "mysql"
   engine_version          = "8.0"
   instance_class          = "db.t3.micro"
   db_name                 = "myappdb"
+   manage_master_user_password = true #rds and secret manager manage this password
   username                = "admin"
-  password                = "mysql123"
+#  password                = "mysql123"
   db_subnet_group_name    = aws_db_subnet_group.sub_grp.name
   vpc_security_group_ids  = [aws_security_group.rds_sg.id]
    parameter_group_name    = "default.mysql8.0"
